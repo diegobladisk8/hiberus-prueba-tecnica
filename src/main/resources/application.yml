@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: payment-orders-service
+
+server:
+  port: 8080
+
+logging:
+  level:
+    com.hiberus.payment: DEBUG
+    org.springframework.web: INFO
+    reactor.netty: INFO
+
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
