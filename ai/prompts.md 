@@ -1,0 +1,52 @@
+# Registro de Prompts y Uso de IA
+
+## Prompt 1: Análisis WSDL
+**Prompt**:
+"Analiza este WSDL SOAP de órdenes de pago y propón un mapeo al estándar BIAN Payment Initiation, identificando operaciones, campos y estados equivalentes."
+
+**Respuesta IA**:
+- Operación SubmitPaymentOrder → POST /payment-orders
+- Operación GetPaymentOrderStatus → GET /payment-orders/{id}/status
+- Campos: externalId → externalReference, debtorIban → debtorAccount.iban
+- Estados: Pendiente → PENDING, Completado → COMPLETED
+
+**Correcciones manuales**:
+- Añadido campo remittanceInformation como opcional
+- Incluido requestedExecutionDate con validación
+- Establecido pattern para IBAN
+
+## Prompt 2: Generación OpenAPI
+**Prompt**:
+"Genera un contrato OpenAPI 3.0 para Payment Initiation alineado con BIAN, incluyendo schemas para PaymentOrder, Account, Amount y respuestas de error."
+
+**Respuesta IA**:
+Generó estructura base con paths y componentes schemas.
+
+**Correcciones manuales**:
+- Ajustado enum de estados según BIAN
+- Añadido RFC 7807 para manejo de errores
+- Incluido validation constraints
+
+## Prompt 3: Arquitectura Hexagonal
+**Prompt**:
+"Define la estructura de paquetes para arquitectura hexagonal en Spring Boot 3 para el servicio de órdenes de pago."
+
+**Respuesta IA**:
+Propuso estructura domain/application/infrastructure.
+
+**Correcciones manuales**:
+- Refinado value objects en dominio
+- Añadido package para ports
+- Incluido config para dependencias
+
+## Prompt 4: Generación de Tests
+**Prompt**:
+"Genera pruebas unitarias para el dominio de PaymentOrder y pruebas de integración para los endpoints REST."
+
+**Respuesta IA**:
+Generó tests básicos con JUnit 5 y AssertJ.
+
+**Correcciones manuales**:
+- Añadido Testcontainers para integración
+- Incluido WebTestClient para endpoints reactivos
+- Mejorado coverage con casos edge
