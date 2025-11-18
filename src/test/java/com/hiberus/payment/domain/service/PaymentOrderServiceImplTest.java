@@ -3,6 +3,7 @@ package com.hiberus.payment.domain.service;
 
 
 import com.hiberus.payment.domain.model.PaymentOrder;
+import com.hiberus.payment.domain.model.PaymentOrderStatusEnum;
 import com.hiberus.payment.domain.repository.PaymentOrderRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,7 +17,8 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 
 class PaymentOrderServiceImplTest {
 
@@ -27,6 +29,39 @@ class PaymentOrderServiceImplTest {
     private PaymentOrderServiceImpl service;
 
     private PaymentOrder paymentOrder;
+
+
+
+    @Test
+    void createPaymentOrder_shouldGenerateIdAndSave() {
+        PaymentOrder paymentOrder = PaymentOrder.builder()
+                .externalReference("EXT-123")
+                .debtorAccount("ACC-1")
+                .creditorAccount("ACC-2")
+                .amount(java.math.BigDecimal.TEN)
+                .currency("USD")
+                .remittanceInformation("Test")
+                .requestedExecutionDate(LocalDateTime.now())
+                .build();
+
+        when(paymentOrderRepository.save(any(PaymentOrder.class)))
+                .thenAnswer(invocation -> {
+                    PaymentOrder saved = invocation.getArgument(0);
+                    return Mono.just(saved);
+                });
+
+        Mono<PaymentOrder> result = service.createPaymentOrder(paymentOrder);
+
+        StepVerifier.create(result)
+                .assertNext(saved -> {
+                    verify(paymentOrderRepository, times(1)).save(any(PaymentOrder.class));
+                    assert saved.getId() != null;
+                    assert saved.getStatus() == PaymentOrderStatusEnum.PENDING;
+                    assert saved.getCreationDate() != null;
+                    assert saved.getLastUpdateDate() != null;
+                })
+                .verifyComplete();
+    }
 
     @BeforeEach
     void setUp() {

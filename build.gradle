@@ -115,15 +115,40 @@ jacocoTestReport {
     }
 }
 
+
 jacocoTestCoverageVerification {
     violationRules {
         rule {
+            excludes = [
+                    'org/openapitools/api/**',
+                    '**/PaymentOrdersApplication.class',
+                    '**/OpenApiGeneratorApplication.class',
+                    'com/hiberus/payment/application/dto/**',
+                    'com.hiberus.payment.generated.api.model/**'
+            ]
             limit {
-                minimum = 0.40
+                minimum = 0.5
             }
         }
     }
 }
+jacocoTestReport {
+    afterEvaluate {
+        classDirectories.setFrom(
+                files(classDirectories.files.collect {
+                    fileTree(dir: it, exclude: [
+                            'org/openapitools/api/**',
+                            '**/PaymentOrdersApplication.class',
+                            '**/OpenApiGeneratorApplication.class',
+                            'com/hiberus/payment/application/dto/**',
+                            'com.hiberus.payment.generated.api.model/**'
+
+                    ])
+                })
+        )
+    }
+}
+
 
 test.finalizedBy jacocoTestReport
 check.dependsOn jacocoTestCoverageVerification
