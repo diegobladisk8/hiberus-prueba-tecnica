@@ -1,0 +1,48 @@
+spring:
+  application:
+    name: payment-order-service
+
+  # Flyway usará JDBC
+  datasource:
+    url: jdbc:h2:mem:paymentorderdb;DB_CLOSE_DELAY=-1
+    username: sa
+    password:
+
+  r2dbc:
+    url: r2dbc:h2:mem:///paymentorderdb;DB_CLOSE_DELAY=-1
+    username: sa
+    password:
+  webflux:
+    static-path-pattern: "/**"
+
+
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    baseline-on-migrate: true
+
+  codec:
+    max-in-memory-size: 10MB
+
+  sql:
+    init:
+      mode: always
+  h2:
+    console:
+      enabled: true
+server:
+  port: 8080
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  endpoint:
+    health:
+      show-details: always
+
+logging:
+  level:
+    com.hiberus.payment: DEBUG
+    org.springframework.r2dbc: DEBUG

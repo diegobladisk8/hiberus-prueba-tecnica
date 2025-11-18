@@ -1,0 +1,133 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.2.0'
+    id 'io.spring.dependency-management' version '1.1.4'
+    id 'org.openapi.generator' version '7.2.0'
+//    id 'com.github.spotbugs' version '5.0.14'
+    id 'checkstyle'
+    id 'jacoco'
+}
+
+group = 'com.hiberus'
+version = '1.0.0'
+
+java {
+    sourceCompatibility = '21'
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+dependencies {
+    // Spring Boot Starters
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+    // Database (Reactive)
+    implementation 'org.springframework.boot:spring-boot-starter-data-r2dbc'
+    implementation 'io.r2dbc:r2dbc-h2'
+
+    // Flyway + driver JDBC para H2
+    implementation 'org.flywaydb:flyway-core'
+    runtimeOnly 'com.h2database:h2'
+
+    // OpenAPI (Swagger UI)
+    implementation 'org.springdoc:springdoc-openapi-starter-webflux-ui:2.3.0'
+
+    // Nullable support
+    implementation 'org.openapitools:jackson-databind-nullable:0.2.6'
+
+    // Lombok
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    // Jakarta Servlet API (no siempre necesario en WebFlux)
+    implementation 'jakarta.servlet:jakarta.servlet-api'
+
+    // Tests
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'io.projectreactor:reactor-test'
+}
+
+// OpenAPI Generator Configuration
+openApiGenerate {
+    generatorName = "spring"
+    inputSpec = "$rootDir/docs/api/openapi.yaml".toString()
+    outputDir = "$buildDir/generated".toString()
+
+    // Solo generamos los modelos (DTOs)
+    modelPackage = "com.hiberus.payment.generated.api.model"
+
+    configOptions = [
+            dateLibrary: "java8",
+            useBeanValidation: "true",
+            useSpringBoot3: "true",
+            useJakartaEe: "true",
+            reactive: "true"
+    ]
+}
+
+// Tarea para copiar las clases generadas al source set principal
+task copyGeneratedSources(type: Copy) {
+    from "$buildDir/generated/src/main/java"
+    into "$projectDir/src/main/java"
+}
+
+// Hacer que compileJava dependa de copiar los fuentes generados
+compileJava.dependsOn copyGeneratedSources
+
+// Especificamos la clase principal para que Spring Boot no se confunda
+bootJar {
+    mainClass = 'com.hiberus.payment.PaymentOrdersApplication'
+}
+
+// Checkstyle
+checkstyle {
+    toolVersion = '10.12.4'
+    configFile = file("${rootDir}/checkstyle.xml")
+    maxWarnings = 0
+    maxErrors = 0
+}
+
+//// find build/generated -name "*.java" -type f
+//spotbugs {
+//    toolVersion = '4.8.2' // <-- Una versión compatible y estable con Java 21
+//    effort = "max"
+//    reportLevel = "low"
+//    ignoreFailures = false
+//}
+// JaCoCo
+jacoco {
+    toolVersion = "0.8.11" //
+}
+
+jacocoTestReport {
+    reports {
+        xml.required = true
+        html.required = true
+    }
+}
+
+jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            limit {
+                minimum = 0.40
+            }
+        }
+    }
+}
+
+test.finalizedBy jacocoTestReport
+check.dependsOn jacocoTestCoverageVerification
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
