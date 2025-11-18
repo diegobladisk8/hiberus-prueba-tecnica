@@ -1,0 +1,7 @@
+<FindBugsFilter>
+    <!-- Ignoramos el aviso EI2 en todas las clases dentro del paquete de modelos generados -->
+    <Match>
+        <Class name="~com\.hiberus\.payment\.generated\.api\.model\..*" />
+        <Bug pattern="EI2" />
+    </Match>
+</FindBugsFilter>

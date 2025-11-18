@@ -4,63 +4,81 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import java.math.BigDecimal;
-import java.time.Instant;
-import java.util.UUID;
 
-/**
- * Domain entity representing a payment order.
- * This is part of the domain layer in hexagonal architecture.
- */
+import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
+import org.springframework.data.domain.Persistable;
+import org.springframework.data.relational.core.mapping.Column;
+import org.springframework.data.relational.core.mapping.Table;
+
+import java.time.LocalDateTime;
+
 @Data
-@Builder
+@Builder(toBuilder = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class PaymentOrder {
-    
-    private UUID id;
+@Table(name = "payment_order", schema = "public")
+public class PaymentOrder implements Persistable<String> {
+
+    @Id
+    private String id;
+
+    @Column("external_reference")
+    private String externalReference;
+
+    @Column("status")
+    private PaymentOrderStatusEnum status;
+
+    @Column("debtor_account")
     private String debtorAccount;
+
+    @Column("creditor_account")
     private String creditorAccount;
-    private String creditorName;
+
+    @Column("amount")
     private BigDecimal amount;
+
+    @Column("currency")
     private String currency;
-    private String description;
-    private PaymentStatus status;
-    private Instant createdAt;
-    private Instant updatedAt;
-    
-    /**
-     * Creates a new payment order with initial status.
-     */
-    public static PaymentOrder create(
-            String debtorAccount,
-            String creditorAccount,
-            String creditorName,
-            BigDecimal amount,
-            String currency,
-            String description) {
-        
-        Instant now = Instant.now();
+
+    @Column("remittance_information")
+    private String remittanceInformation;
+
+    @Column("requested_execution_date")
+    private LocalDateTime requestedExecutionDate;
+
+    @Column("creation_date")
+    private LocalDateTime creationDate;
+
+    @Column("last_update_date")
+    private LocalDateTime lastUpdateDate;
+
+    @Transient
+    private boolean isNew = true;
+
+    public static PaymentOrder create(String externalReference, String debtorAccount,
+                                      String creditorAccount, BigDecimal amount, String currency,
+                                      String remittanceInformation, LocalDateTime requestedExecutionDate) {
+        LocalDateTime now = LocalDateTime.now();
         return PaymentOrder.builder()
-                .id(UUID.randomUUID())
+                .externalReference(externalReference)
                 .debtorAccount(debtorAccount)
                 .creditorAccount(creditorAccount)
-                .creditorName(creditorName)
                 .amount(amount)
                 .currency(currency)
-                .description(description)
-                .status(PaymentStatus.PENDING)
-                .createdAt(now)
-                .updatedAt(now)
+                .remittanceInformation(remittanceInformation)
+                .requestedExecutionDate(requestedExecutionDate)
+                .status(PaymentOrderStatusEnum.PENDING)
+                .creationDate(now)
+                .isNew(true) // ← MARCAR COMO NUEVA
+                .lastUpdateDate(now)
                 .build();
     }
-    
-    /**
-     * Updates the status of the payment order.
-     */
-    public void updateStatus(PaymentStatus newStatus) {
-        this.status = newStatus;
-        this.updatedAt = Instant.now();
+
+
+    @Override
+    public boolean isNew() {
+        return isNew;
     }
 }
