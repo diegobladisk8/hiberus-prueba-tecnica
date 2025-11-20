@@ -124,7 +124,8 @@ jacocoTestCoverageVerification {
                     '**/PaymentOrdersApplication.class',
                     '**/OpenApiGeneratorApplication.class',
                     'com/hiberus/payment/application/dto/**',
-                    'com.hiberus.payment.generated.api.model/**'
+                    'com.hiberus.payment.generated.api.model/**',
+                    'com.hiberus.payment.domain.model/**'
             ]
             limit {
                 minimum = 0.5
@@ -141,8 +142,8 @@ jacocoTestReport {
                             '**/PaymentOrdersApplication.class',
                             '**/OpenApiGeneratorApplication.class',
                             'com/hiberus/payment/application/dto/**',
-                            'com.hiberus.payment.generated.api.model/**'
-
+                            'com.hiberus.payment.generated.api.model/**',
+                            'com.hiberus.payment.domain.model/**'
                     ])
                 })
         )

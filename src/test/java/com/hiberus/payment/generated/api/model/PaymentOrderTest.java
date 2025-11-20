@@ -4,13 +4,21 @@ package com.hiberus.payment.generated.api.model;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
+import static org.assertj.core.api.Assertions.assertThat;
 
+import com.hiberus.payment.domain.model.PaymentOrderStatusEnum;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
  class PaymentOrderTest {
+
+     private final String ID = "STATUS-123";
+     private final String PAYMENT_ORDER_ID = "PO-123";
+     private final PaymentOrderStatusEnum STATUS = PaymentOrderStatusEnum.PENDING;
+     private final LocalDateTime LAST_UPDATE_DATE = LocalDateTime.now();
 
     @Test
     @DisplayName("Debería crear PaymentOrder con constructor obligatorio")
@@ -109,5 +117,65 @@ import org.mockito.Mockito;
         assertTrue(result.contains("PO-123"));
         assertTrue(result.contains("class PaymentOrder"));
     }
-}
+
+     @Test
+     @DisplayName("Equals should return true for same object")
+     void testEquals_SameObject() {
+         // Given
+         com.hiberus.payment.domain.model.PaymentOrderStatus status = com.hiberus.payment.domain.model.PaymentOrderStatus.builder()
+                 .id(ID)
+                 .paymentOrderId(PAYMENT_ORDER_ID)
+                 .status(STATUS)
+                 .lastUpdateDate(LAST_UPDATE_DATE)
+                 .build();
+
+         // When & Then
+         assertThat(status.equals(status)).isTrue();
+     }
+
+     @Test
+     @DisplayName("Equals and HashCode contract: equal objects must have same hashCode")
+     void testEqualsHashCodeContract() {
+         // Given
+         com.hiberus.payment.domain.model.PaymentOrderStatus status1 = com.hiberus.payment.domain.model.PaymentOrderStatus.builder()
+                 .id("CONTRACT-ID")
+                 .paymentOrderId("PO-1")
+                 .status(PaymentOrderStatusEnum.COMPLETED)
+                 .build();
+
+         com.hiberus.payment.domain.model.PaymentOrderStatus status2 = com.hiberus.payment.domain.model.PaymentOrderStatus.builder()
+                 .id("CONTRACT-ID") // Mismo ID
+                 .paymentOrderId("PO-1") // Diferente paymentOrderId
+                 .status(PaymentOrderStatusEnum.COMPLETED) // Diferente status
+                 .build();
+
+         // When & Then
+         assertThat(status1.equals(status2)).isTrue();
+         assertThat(status1.hashCode()).isEqualTo(status2.hashCode());
+     }
+
+     @Test
+     @DisplayName("Equals debe retornar false comparando con null u otro tipo")
+     void testEqualsNullAndDifferentType() {
+
+         PaymentOrder po = new PaymentOrder();
+         po.setId("ID-X");
+
+         assertNotEquals(po, null);
+         assertNotEquals(po, "string");
+     }
+
+     @Test
+     @DisplayName("hashCode debe ser consistente entre invocaciones")
+     void testHashCodeConsistency() {
+         PaymentOrder po = new PaymentOrder();
+                 po.setId("CONSISTENT");
+
+         int h1 = po.hashCode();
+         int h2 = po.hashCode();
+         assertEquals(h1, h2);
+     }
+
+
+ }
 

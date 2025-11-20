@@ -30,11 +30,11 @@ public class PaymentOrder {
    */
   public enum StatusEnum {
     PENDING("PENDING"),
-    
+
     PROCESSING("PROCESSING"),
-    
+
     COMPLETED("COMPLETED"),
-    
+
     REJECTED("REJECTED");
 
     private String value;
@@ -108,7 +108,7 @@ public class PaymentOrder {
    * Identificador único de la orden de pago
    * @return id
   */
-  @NotNull 
+  @NotNull
   @Schema(name = "id", example = "PO-0001", description = "Identificador único de la orden de pago", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("id")
   public String getId() {
@@ -128,7 +128,7 @@ public class PaymentOrder {
    * Referencia externa única para la orden de pago
    * @return externalReference
   */
-  @NotNull 
+  @NotNull
   @Schema(name = "externalReference", example = "EXT-1", description = "Referencia externa única para la orden de pago", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("externalReference")
   public String getExternalReference() {
@@ -148,7 +148,7 @@ public class PaymentOrder {
    * Estado de la orden de pago
    * @return status
   */
-  @NotNull 
+  @NotNull
   @Schema(name = "status", example = "PENDING", description = "Estado de la orden de pago", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("status")
   public StatusEnum getStatus() {
@@ -168,7 +168,7 @@ public class PaymentOrder {
    * Get debtorAccount
    * @return debtorAccount
   */
-  @NotNull @Valid 
+  @NotNull @Valid
   @Schema(name = "debtorAccount", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("debtorAccount")
   public Account getDebtorAccount() {
@@ -188,7 +188,7 @@ public class PaymentOrder {
    * Get creditorAccount
    * @return creditorAccount
   */
-  @NotNull @Valid 
+  @NotNull @Valid
   @Schema(name = "creditorAccount", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("creditorAccount")
   public Account getCreditorAccount() {
@@ -208,7 +208,7 @@ public class PaymentOrder {
    * Get instructedAmount
    * @return instructedAmount
   */
-  @NotNull @Valid 
+  @NotNull @Valid
   @Schema(name = "instructedAmount", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("instructedAmount")
   public Amount getInstructedAmount() {
@@ -228,7 +228,7 @@ public class PaymentOrder {
    * Información de remesa
    * @return remittanceInformation
   */
-  
+
   @Schema(name = "remittanceInformation", example = "Factura 001-123", description = "Información de remesa", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("remittanceInformation")
   public String getRemittanceInformation() {
@@ -248,7 +248,7 @@ public class PaymentOrder {
    * Fecha solicitada de ejecución
    * @return requestedExecutionDate
   */
-  @Valid 
+  @Valid
   @Schema(name = "requestedExecutionDate", example = "Thu Oct 30 19:00:00 ECT 2025", description = "Fecha solicitada de ejecución", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("requestedExecutionDate")
   public LocalDate getRequestedExecutionDate() {
@@ -268,7 +268,7 @@ public class PaymentOrder {
    * Fecha de creación de la orden
    * @return creationDate
   */
-  @Valid 
+  @Valid
   @Schema(name = "creationDate", example = "2023-11-15T10:30Z", description = "Fecha de creación de la orden", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("creationDate")
   public OffsetDateTime getCreationDate() {
@@ -288,7 +288,7 @@ public class PaymentOrder {
    * Fecha de última actualización
    * @return lastUpdateDate
   */
-  @Valid 
+  @Valid
   @Schema(name = "lastUpdateDate", example = "2023-11-15T10:30Z", description = "Fecha de última actualización", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("lastUpdateDate")
   public OffsetDateTime getLastUpdateDate() {

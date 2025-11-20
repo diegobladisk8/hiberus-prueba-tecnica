@@ -46,7 +46,7 @@ public class Amount {
    * Monto
    * @return amount
   */
-  @NotNull 
+  @NotNull
   @Schema(name = "amount", example = "150.75", description = "Monto", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("amount")
   public Double getAmount() {
@@ -66,7 +66,7 @@ public class Amount {
    * Moneda
    * @return currency
   */
-  @NotNull 
+  @NotNull
   @Schema(name = "currency", example = "USD", description = "Moneda", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("currency")
   public String getCurrency() {

@@ -43,7 +43,7 @@ public class Account {
    * IBAN de la cuenta
    * @return iban
   */
-  @NotNull 
+  @NotNull
   @Schema(name = "iban", example = "EC12DEBTOR", description = "IBAN de la cuenta", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("iban")
   public String getIban() {

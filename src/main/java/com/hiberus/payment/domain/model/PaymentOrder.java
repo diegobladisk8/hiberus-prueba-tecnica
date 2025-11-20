@@ -55,7 +55,7 @@ public class PaymentOrder implements Persistable<String> {
     private LocalDateTime lastUpdateDate;
 
     @Transient
-    private boolean isNew = true;
+    private boolean isNew;
 
     public static PaymentOrder create(String externalReference, String debtorAccount,
                                       String creditorAccount, BigDecimal amount, String currency,

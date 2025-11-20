@@ -54,7 +54,7 @@ public class Error {
    * URI que identifica el tipo de problema
    * @return type
   */
-  @NotNull @Valid 
+  @NotNull @Valid
   @Schema(name = "type", example = "https://example.com/errors/payment-order-not-found", description = "URI que identifica el tipo de problema", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("type")
   public URI getType() {
@@ -74,7 +74,7 @@ public class Error {
    * Breve resumen del tipo de problema
    * @return title
   */
-  @NotNull 
+  @NotNull
   @Schema(name = "title", example = "Payment Order Not Found", description = "Breve resumen del tipo de problema", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("title")
   public String getTitle() {
@@ -94,7 +94,7 @@ public class Error {
    * Código de estado HTTP
    * @return status
   */
-  @NotNull 
+  @NotNull
   @Schema(name = "status", example = "404", description = "Código de estado HTTP", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("status")
   public Integer getStatus() {
@@ -114,7 +114,7 @@ public class Error {
    * Explicación detallada del problema
    * @return detail
   */
-  
+
   @Schema(name = "detail", example = "The payment order with ID 'PO-0001' was not found", description = "Explicación detallada del problema", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("detail")
   public String getDetail() {
@@ -134,7 +134,7 @@ public class Error {
    * URI que identifica la ocurrencia específica del problema
    * @return instance
   */
-  @Valid 
+  @Valid
   @Schema(name = "instance", example = "/payment-initiation/payment-orders/PO-0001", description = "URI que identifica la ocurrencia específica del problema", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("instance")
   public URI getInstance() {
