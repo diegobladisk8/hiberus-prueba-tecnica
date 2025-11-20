@@ -8,7 +8,8 @@ import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.hiberus.payment.domain.model.PaymentOrderStatusEnum;
+import com.hiberus.payment.infrastructure.model.PaymentOrderStatusEnum;
+import com.hiberus.payment.infrastructure.model.PaymentOrderStatusEntity;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -122,7 +123,7 @@ import org.mockito.Mockito;
      @DisplayName("Equals should return true for same object")
      void testEquals_SameObject() {
          // Given
-         com.hiberus.payment.domain.model.PaymentOrderStatus status = com.hiberus.payment.domain.model.PaymentOrderStatus.builder()
+         PaymentOrderStatusEntity status = PaymentOrderStatusEntity.builder()
                  .id(ID)
                  .paymentOrderId(PAYMENT_ORDER_ID)
                  .status(STATUS)
@@ -137,13 +138,13 @@ import org.mockito.Mockito;
      @DisplayName("Equals and HashCode contract: equal objects must have same hashCode")
      void testEqualsHashCodeContract() {
          // Given
-         com.hiberus.payment.domain.model.PaymentOrderStatus status1 = com.hiberus.payment.domain.model.PaymentOrderStatus.builder()
+         PaymentOrderStatusEntity status1 = PaymentOrderStatusEntity.builder()
                  .id("CONTRACT-ID")
                  .paymentOrderId("PO-1")
                  .status(PaymentOrderStatusEnum.COMPLETED)
                  .build();
 
-         com.hiberus.payment.domain.model.PaymentOrderStatus status2 = com.hiberus.payment.domain.model.PaymentOrderStatus.builder()
+         PaymentOrderStatusEntity status2 = PaymentOrderStatusEntity.builder()
                  .id("CONTRACT-ID") // Mismo ID
                  .paymentOrderId("PO-1") // Diferente paymentOrderId
                  .status(PaymentOrderStatusEnum.COMPLETED) // Diferente status

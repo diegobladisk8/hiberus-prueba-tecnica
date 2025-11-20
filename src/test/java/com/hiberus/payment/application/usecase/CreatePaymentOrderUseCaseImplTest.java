@@ -3,7 +3,8 @@ package com.hiberus.payment.application.usecase;
 import com.hiberus.payment.application.dto.PaymentOrderRequest;
 import com.hiberus.payment.application.dto.PaymentOrderResponse;
 import com.hiberus.payment.application.mapper.PaymentOrderMapper;
-import com.hiberus.payment.domain.model.PaymentOrder;
+import com.hiberus.payment.generated.api.model.Amount;
+import com.hiberus.payment.infrastructure.model.PaymentOrderEntity;
 import com.hiberus.payment.domain.service.PaymentOrderService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -42,14 +43,12 @@ class CreatePaymentOrderUseCaseImplTest {
         PaymentOrderRequest request = PaymentOrderRequest.builder()
                 .externalReference("EXT-100")
                 .remittanceInformation("Test remittance")
-                .instructedAmount(PaymentOrderRequest.Amount.builder()
-                        .amount(BigDecimal.valueOf(99).doubleValue())
-                        .currency("USD")
-                        .build())
+                .instructedAmount(new Amount(BigDecimal.valueOf(99).doubleValue(),
+                        "USD"))
                 .build();
 
         // Objeto dominio mapeado desde el request
-        PaymentOrder domain = PaymentOrder.builder()
+        PaymentOrderEntity domain = PaymentOrderEntity.builder()
                 .id("P-001")
                 .externalReference("EXT-100")
                 .creationDate(LocalDateTime.now())
@@ -98,7 +97,7 @@ class CreatePaymentOrderUseCaseImplTest {
                 .externalReference("EXT-500")
                 .build();
 
-        PaymentOrder domain = PaymentOrder.builder()
+        PaymentOrderEntity domain = PaymentOrderEntity.builder()
                 .id("TEMP")
                 .externalReference("EXT-500")
                 .build();

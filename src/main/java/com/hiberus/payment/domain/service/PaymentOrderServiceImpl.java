@@ -1,10 +1,10 @@
 package com.hiberus.payment.domain.service;
 
 
-import com.hiberus.payment.domain.model.PaymentOrder;
-import com.hiberus.payment.domain.model.PaymentOrderStatus;
-import com.hiberus.payment.domain.model.PaymentOrderStatusEnum;
-import com.hiberus.payment.domain.repository.PaymentOrderRepository;
+import com.hiberus.payment.infrastructure.model.PaymentOrderEntity;
+import com.hiberus.payment.infrastructure.model.PaymentOrderStatusEntity;
+import com.hiberus.payment.infrastructure.model.PaymentOrderStatusEnum;
+import com.hiberus.payment.infrastructure.repository.PaymentOrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
@@ -19,8 +19,8 @@ public class PaymentOrderServiceImpl implements PaymentOrderService {
     private final PaymentOrderRepository paymentOrderRepository;
 
     @Override
-    public Mono<PaymentOrder> createPaymentOrder(PaymentOrder paymentOrder) {
-        PaymentOrder newPaymentOrder = paymentOrder.toBuilder()
+    public Mono<PaymentOrderEntity> createPaymentOrder(PaymentOrderEntity paymentOrder) {
+        PaymentOrderEntity newPaymentOrder = paymentOrder.toBuilder()
                 .id(generatePaymentOrderId())
                 .creationDate(LocalDateTime.now())
                 .lastUpdateDate(LocalDateTime.now())
@@ -32,15 +32,15 @@ public class PaymentOrderServiceImpl implements PaymentOrderService {
 
 
     @Override
-    public Mono<PaymentOrder> getPaymentOrderById(String id) {
+    public Mono<PaymentOrderEntity> getPaymentOrderById(String id) {
         return paymentOrderRepository.findById(id)
                 .switchIfEmpty(Mono.error(new RuntimeException("Payment order not found")));
     }
 
     @Override
-    public Mono<PaymentOrderStatus> getPaymentOrderStatus(String id) {
+    public Mono<PaymentOrderStatusEntity> getPaymentOrderStatus(String id) {
         return paymentOrderRepository.findById(id)
-                .map(paymentOrder -> PaymentOrderStatus.builder()
+                .map(paymentOrder -> PaymentOrderStatusEntity.builder()
                         .id(id)
                         .paymentOrderId(id)
                         .status(paymentOrder.getStatus())

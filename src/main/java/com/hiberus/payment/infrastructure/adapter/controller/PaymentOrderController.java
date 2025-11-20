@@ -1,9 +1,9 @@
 package com.hiberus.payment.infrastructure.adapter.controller;
 
-import com.hiberus.payment.application.usecase.CreatePaymentOrderUseCase;
+import com.hiberus.payment.application.port.out.CreatePaymentOrderUseCase;
 import com.hiberus.payment.application.usecase.GetPaymentOrderStatusUseCase;
 import com.hiberus.payment.application.usecase.GetPaymentOrderUseCase;
-import com.hiberus.payment.generated.api.PaymentOrdersApi;
+import com.hiberus.payment.application.port.in.PaymentOrdersApi;
 import com.hiberus.payment.generated.api.model.Account;
 import com.hiberus.payment.generated.api.model.Amount;
 import com.hiberus.payment.generated.api.model.PaymentOrder;
@@ -93,16 +93,9 @@ public class PaymentOrderController implements PaymentOrdersApi {
     private Mono<com.hiberus.payment.application.dto.PaymentOrderRequest> convertToDomainRequest(PaymentOrderRequest generatedRequest) {
         return Mono.just(com.hiberus.payment.application.dto.PaymentOrderRequest.builder()
                 .externalReference(generatedRequest.getExternalReference())
-                .debtorAccount(com.hiberus.payment.application.dto.PaymentOrderRequest.Account.builder()
-                        .iban(generatedRequest.getDebtorAccount().getIban())
-                        .build())
-                .creditorAccount(com.hiberus.payment.application.dto.PaymentOrderRequest.Account.builder()
-                        .iban(generatedRequest.getCreditorAccount().getIban())
-                        .build())
-                .instructedAmount(com.hiberus.payment.application.dto.PaymentOrderRequest.Amount.builder()
-                        .amount(generatedRequest.getInstructedAmount().getAmount())
-                        .currency(generatedRequest.getInstructedAmount().getCurrency())
-                        .build())
+                .debtorAccount(generatedRequest.getDebtorAccount())
+                .creditorAccount(generatedRequest.getCreditorAccount())
+                .instructedAmount(generatedRequest.getInstructedAmount())
                 .remittanceInformation(generatedRequest.getRemittanceInformation())
                 .requestedExecutionDate(generatedRequest.getRequestedExecutionDate())
                 .build());

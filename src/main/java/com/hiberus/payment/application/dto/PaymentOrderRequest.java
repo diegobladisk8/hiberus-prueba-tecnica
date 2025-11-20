@@ -1,5 +1,7 @@
 package com.hiberus.payment.application.dto;
 
+import com.hiberus.payment.generated.api.model.Account;
+import com.hiberus.payment.generated.api.model.Amount;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -36,27 +38,4 @@ public class PaymentOrderRequest {
 
     private LocalDate requestedExecutionDate;
 
-    @Data
-    @Builder
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static class Account {
-
-        @NotBlank(message = "IBAN is required")
-        private String iban;
-    }
-
-    @Data
-    @Builder
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static class Amount {
-
-        @NotNull(message = "Amount is required")
-        @Positive(message = "Amount must be positive")
-        private Double amount;
-
-        @NotBlank(message = "Currency is required")
-        private String currency;
-    }
 }

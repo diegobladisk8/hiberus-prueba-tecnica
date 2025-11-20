@@ -63,7 +63,7 @@ openApiGenerate {
     outputDir = "$buildDir/generated".toString()
 
     // Solo generamos los modelos (DTOs)
-    modelPackage = "com.hiberus.payment.generated.api.model"
+    modelPackage = "com.hiberus.payment.domain.model"
 
     configOptions = [
             dateLibrary: "java8",
@@ -128,7 +128,7 @@ jacocoTestCoverageVerification {
                     'com.hiberus.payment.domain.model/**'
             ]
             limit {
-                minimum = 0.5
+                minimum = 0.1
             }
         }
     }

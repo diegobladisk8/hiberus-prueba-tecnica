@@ -47,6 +47,5 @@ Propuso estructura domain/application/infrastructure.
 Generó tests básicos con JUnit 5 y AssertJ.
 
 **Correcciones manuales**:
-- Añadido Testcontainers para integración
 - Incluido WebTestClient para endpoints reactivos
 - Mejorado coverage con casos edge

@@ -1,11 +1,12 @@
 package com.hiberus.payment.application.dto;
 
+import com.hiberus.payment.generated.api.model.Account;
+import com.hiberus.payment.generated.api.model.Amount;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Data
@@ -25,20 +26,5 @@ public class PaymentOrderResponse {
     private LocalDateTime creationDate;
     private LocalDateTime lastUpdateDate;
 
-    @Data
-    @Builder
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static class Account {
-        private String iban;
-    }
 
-    @Data
-    @Builder
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static class Amount {
-        private BigDecimal amount;
-        private String currency;
-    }
 }

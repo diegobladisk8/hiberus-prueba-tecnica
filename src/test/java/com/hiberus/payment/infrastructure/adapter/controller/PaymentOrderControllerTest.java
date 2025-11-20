@@ -1,6 +1,6 @@
 package com.hiberus.payment.infrastructure.adapter.controller;
 
-import com.hiberus.payment.application.usecase.CreatePaymentOrderUseCase;
+import com.hiberus.payment.application.port.out.CreatePaymentOrderUseCase;
 import com.hiberus.payment.application.usecase.GetPaymentOrderStatusUseCase;
 import com.hiberus.payment.application.usecase.GetPaymentOrderUseCase;
 import com.hiberus.payment.application.dto.PaymentOrderRequest;
@@ -8,7 +8,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import reactor.core.publisher.Mono;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -70,12 +69,10 @@ class PaymentOrderControllerTest {
                 .id("PO123")
                 .externalReference("EXT-123")
                 .status("PENDING")
-                .debtorAccount(PaymentOrderResponse.Account.builder().iban("DEBTOR-IBAN").build())
-                .creditorAccount(PaymentOrderResponse.Account.builder().iban("CRED-IBAN").build())
-                .instructedAmount(PaymentOrderResponse.Amount.builder()
-                        .amount(new BigDecimal("50.0"))
-                        .currency("USD")
-                        .build())
+                .debtorAccount(new Account("DEBTOR-IBAN"))
+                .creditorAccount(new Account("CRED-IBAN"))
+                .instructedAmount(new Amount(
+                       50D, "USD"))
                 .remittanceInformation("Test payment")
                 .requestedExecutionDate(LocalDate.now().atStartOfDay())
                 .creationDate(LocalDateTime.now())
@@ -112,12 +109,10 @@ class PaymentOrderControllerTest {
                 .id("PO999")
                 .externalReference("EXT-999")
                 .status("COMPLETED")
-                .debtorAccount(PaymentOrderResponse.Account.builder().iban("AAA").build())
-                .creditorAccount(PaymentOrderResponse.Account.builder().iban("BBB").build())
-                .instructedAmount(PaymentOrderResponse.Amount.builder()
-                        .amount(BigDecimal.TEN)
-                        .currency("USD")
-                        .build())
+                .debtorAccount(new Account("DEBTOR-IBAN"))
+                .creditorAccount(new Account("CRED-IBAN"))
+                .instructedAmount(new Amount(
+                        50D, "USD"))
                 .requestedExecutionDate(LocalDate.now().atStartOfDay())
                 .creationDate(LocalDateTime.now())
                 .lastUpdateDate(LocalDateTime.now())

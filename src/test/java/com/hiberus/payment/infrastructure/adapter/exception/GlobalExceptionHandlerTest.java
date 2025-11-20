@@ -1,4 +1,4 @@
-package com.hiberus.payment.domain.exception;
+package com.hiberus.payment.infrastructure.adapter.exception;
 
 import com.hiberus.payment.infrastructure.exception.GlobalExceptionHandler;
 import org.junit.jupiter.api.Test;

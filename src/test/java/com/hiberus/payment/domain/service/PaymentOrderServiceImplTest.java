@@ -2,9 +2,9 @@ package com.hiberus.payment.domain.service;
 
 
 
-import com.hiberus.payment.domain.model.PaymentOrder;
-import com.hiberus.payment.domain.model.PaymentOrderStatusEnum;
-import com.hiberus.payment.domain.repository.PaymentOrderRepository;
+import com.hiberus.payment.infrastructure.model.PaymentOrderEntity;
+import com.hiberus.payment.infrastructure.model.PaymentOrderStatusEnum;
+import com.hiberus.payment.infrastructure.repository.PaymentOrderRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -28,13 +28,13 @@ class PaymentOrderServiceImplTest {
     @InjectMocks
     private PaymentOrderServiceImpl service;
 
-    private PaymentOrder paymentOrder;
+    private PaymentOrderEntity paymentOrder;
 
 
 
     @Test
     void createPaymentOrder_shouldGenerateIdAndSave() {
-        PaymentOrder paymentOrder = PaymentOrder.builder()
+        PaymentOrderEntity paymentOrder = PaymentOrderEntity.builder()
                 .externalReference("EXT-123")
                 .debtorAccount("ACC-1")
                 .creditorAccount("ACC-2")
@@ -44,17 +44,17 @@ class PaymentOrderServiceImplTest {
                 .requestedExecutionDate(LocalDateTime.now())
                 .build();
 
-        when(paymentOrderRepository.save(any(PaymentOrder.class)))
+        when(paymentOrderRepository.save(any(PaymentOrderEntity.class)))
                 .thenAnswer(invocation -> {
-                    PaymentOrder saved = invocation.getArgument(0);
+                    PaymentOrderEntity saved = invocation.getArgument(0);
                     return Mono.just(saved);
                 });
 
-        Mono<PaymentOrder> result = service.createPaymentOrder(paymentOrder);
+        Mono<PaymentOrderEntity> result = service.createPaymentOrder(paymentOrder);
 
         StepVerifier.create(result)
                 .assertNext(saved -> {
-                    verify(paymentOrderRepository, times(1)).save(any(PaymentOrder.class));
+                    verify(paymentOrderRepository, times(1)).save(any(PaymentOrderEntity.class));
                     assert saved.getId() != null;
                     assert saved.getStatus() == PaymentOrderStatusEnum.PENDING;
                     assert saved.getCreationDate() != null;
@@ -67,7 +67,7 @@ class PaymentOrderServiceImplTest {
     void setUp() {
         MockitoAnnotations.openMocks(this);
 
-        paymentOrder = PaymentOrder.builder()
+        paymentOrder = PaymentOrderEntity.builder()
                 .id(null)
                 .externalReference("REF-123")
                 .debtorAccount("DEBTOR-IBAN-001")

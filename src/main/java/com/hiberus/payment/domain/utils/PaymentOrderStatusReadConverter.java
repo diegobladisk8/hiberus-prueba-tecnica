@@ -1,6 +1,6 @@
 package com.hiberus.payment.domain.utils;
 
-import com.hiberus.payment.domain.model.PaymentOrderStatusEnum;
+import com.hiberus.payment.infrastructure.model.PaymentOrderStatusEnum;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.convert.ReadingConverter;
 

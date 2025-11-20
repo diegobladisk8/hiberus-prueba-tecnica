@@ -22,7 +22,7 @@ import jakarta.annotation.Generated;
  * PaymentOrderRequest
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-17T18:46:16.062694-05:00[America/Guayaquil]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-20T11:16:05.327354-05:00[America/Guayaquil]")
 public class PaymentOrderRequest {
 
   private String externalReference;
@@ -61,7 +61,7 @@ public class PaymentOrderRequest {
    * Referencia externa única para la orden de pago
    * @return externalReference
   */
-  @NotNull
+  @NotNull 
   @Schema(name = "externalReference", example = "EXT-1", description = "Referencia externa única para la orden de pago", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("externalReference")
   public String getExternalReference() {
@@ -81,7 +81,7 @@ public class PaymentOrderRequest {
    * Get debtorAccount
    * @return debtorAccount
   */
-  @NotNull @Valid
+  @NotNull @Valid 
   @Schema(name = "debtorAccount", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("debtorAccount")
   public Account getDebtorAccount() {
@@ -101,7 +101,7 @@ public class PaymentOrderRequest {
    * Get creditorAccount
    * @return creditorAccount
   */
-  @NotNull @Valid
+  @NotNull @Valid 
   @Schema(name = "creditorAccount", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("creditorAccount")
   public Account getCreditorAccount() {
@@ -121,7 +121,7 @@ public class PaymentOrderRequest {
    * Get instructedAmount
    * @return instructedAmount
   */
-  @NotNull @Valid
+  @NotNull @Valid 
   @Schema(name = "instructedAmount", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("instructedAmount")
   public Amount getInstructedAmount() {
@@ -141,7 +141,7 @@ public class PaymentOrderRequest {
    * Información de remesa
    * @return remittanceInformation
   */
-
+  
   @Schema(name = "remittanceInformation", example = "Factura 001-123", description = "Información de remesa", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("remittanceInformation")
   public String getRemittanceInformation() {
@@ -161,7 +161,7 @@ public class PaymentOrderRequest {
    * Fecha solicitada de ejecución
    * @return requestedExecutionDate
   */
-  @Valid
+  @Valid 
   @Schema(name = "requestedExecutionDate", example = "Thu Oct 30 19:00:00 ECT 2025", description = "Fecha solicitada de ejecución", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("requestedExecutionDate")
   public LocalDate getRequestedExecutionDate() {

@@ -1,16 +1,16 @@
 package com.hiberus.payment.domain.service;
 
-import com.hiberus.payment.domain.model.PaymentOrder;
-import com.hiberus.payment.domain.model.PaymentOrderStatus;
+import com.hiberus.payment.infrastructure.model.PaymentOrderEntity;
+import com.hiberus.payment.infrastructure.model.PaymentOrderStatusEntity;
 import reactor.core.publisher.Mono;
 
 
 public interface PaymentOrderService {
 
-    Mono<PaymentOrder> createPaymentOrder(PaymentOrder paymentOrder);
+    Mono<PaymentOrderEntity> createPaymentOrder(PaymentOrderEntity paymentOrder);
 
-    Mono<PaymentOrder> getPaymentOrderById(String id);
+    Mono<PaymentOrderEntity> getPaymentOrderById(String id);
 
-    Mono<PaymentOrderStatus> getPaymentOrderStatus(String id);
+    Mono<PaymentOrderStatusEntity> getPaymentOrderStatus(String id);
 
 }

@@ -1,4 +1,4 @@
-package com.hiberus.payment.generated.api.model;
+package com.hiberus.payment.domain.model;
 
 import java.net.URI;
 import java.util.Objects;
@@ -19,7 +19,7 @@ import jakarta.annotation.Generated;
  * Error
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-20T11:16:05.327354-05:00[America/Guayaquil]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-20T12:44:16.896291-05:00[America/Guayaquil]")
 public class Error {
 
   private URI type;

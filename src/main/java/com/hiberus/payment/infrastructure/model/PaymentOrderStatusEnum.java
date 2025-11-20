@@ -1,4 +1,4 @@
-package com.hiberus.payment.domain.model;
+package com.hiberus.payment.infrastructure.model;
 
 /**
  * Enum representing the status of a payment order.

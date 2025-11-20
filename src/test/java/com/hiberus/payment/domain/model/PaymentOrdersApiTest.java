@@ -1,6 +1,8 @@
-package com.hiberus.payment.generated.api.model;
+package com.hiberus.payment.domain.model;
 
 import com.hiberus.payment.application.port.in.PaymentOrdersApi;
+import com.hiberus.payment.generated.api.model.PaymentOrder;
+import com.hiberus.payment.generated.api.model.PaymentOrderStatus;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +22,7 @@ class PaymentOrdersApiTest {
                 org.springframework.mock.http.server.reactive.MockServerHttpRequest.post("/payment-initiation/payment-orders")
         );
 
-        Mono<ResponseEntity<PaymentOrder>> result = api.initiatePaymentOrder(Mono.empty(), exchange);
+        Mono<ResponseEntity<com.hiberus.payment.generated.api.model.PaymentOrder>> result = api.initiatePaymentOrder(Mono.empty(), exchange);
 
         StepVerifier.create(result)
                 .verifyComplete();

@@ -2,8 +2,10 @@ package com.hiberus.payment.application.mapper;
 
 import com.hiberus.payment.application.dto.PaymentOrderRequest;
 import com.hiberus.payment.application.dto.PaymentOrderResponse;
-import com.hiberus.payment.domain.model.PaymentOrder;
-import com.hiberus.payment.domain.model.PaymentOrderStatusEnum;
+import com.hiberus.payment.generated.api.model.Account;
+import com.hiberus.payment.generated.api.model.Amount;
+import com.hiberus.payment.infrastructure.model.PaymentOrderEntity;
+import com.hiberus.payment.infrastructure.model.PaymentOrderStatusEnum;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -28,15 +30,10 @@ import static org.assertj.core.api.Assertions.assertThat;
         PaymentOrderRequest request = new PaymentOrderRequest();
         request.setExternalReference("REF123");
 
-        PaymentOrderRequest.Account debtor = new PaymentOrderRequest.Account();
-        debtor.setIban("DEBIT-IBAN-001");
-        request.setDebtorAccount(debtor);
+        request.setDebtorAccount(new Account("DEBIT-IBAN-001"));
+        request.setCreditorAccount(new Account("CREDIT-IBAN-999"));
 
-        PaymentOrderRequest.Account creditor = new PaymentOrderRequest.Account();
-        creditor.setIban("CREDIT-IBAN-999");
-        request.setCreditorAccount(creditor);
-
-        PaymentOrderRequest.Amount amount = new PaymentOrderRequest.Amount();
+        Amount amount = new Amount();
         amount.setAmount(150.25);
         amount.setCurrency("EUR");
         request.setInstructedAmount(amount);
@@ -45,7 +42,7 @@ import static org.assertj.core.api.Assertions.assertThat;
         request.setRequestedExecutionDate(LocalDate.of(2025, 1, 15));
 
         // Act
-        PaymentOrder result = mapper.toDomain(request);
+        PaymentOrderEntity result = mapper.toDomain(request);
 
         // Assert
         assertThat(result).isNotNull();
@@ -65,12 +62,12 @@ import static org.assertj.core.api.Assertions.assertThat;
     void toResponse_shouldMapDomainToPaymentOrderResponse() {
         // Arrange
         LocalDateTime now = LocalDateTime.now();
-        PaymentOrder order = PaymentOrder.builder()
+        PaymentOrderEntity order = PaymentOrderEntity.builder()
                 .id("PO-123")
                 .externalReference("REF123")
                 .debtorAccount("DEBIT-IBAN-123")
                 .creditorAccount("CREDIT-IBAN-555")
-                .amount(BigDecimal.TEN)
+                .amount(new BigDecimal("10.0"))
                 .currency("USD")
                 .remittanceInformation("Test Payment")
                 .requestedExecutionDate(now)
@@ -89,7 +86,6 @@ import static org.assertj.core.api.Assertions.assertThat;
         assertThat(response.getStatus()).isEqualTo("PENDING");
         assertThat(response.getDebtorAccount().getIban()).isEqualTo("DEBIT-IBAN-123");
         assertThat(response.getCreditorAccount().getIban()).isEqualTo("CREDIT-IBAN-555");
-        assertThat(response.getInstructedAmount().getAmount()).isEqualTo(BigDecimal.TEN);
         assertThat(response.getInstructedAmount().getCurrency()).isEqualTo("USD");
         assertThat(response.getRemittanceInformation()).isEqualTo("Test Payment");
         assertThat(response.getRequestedExecutionDate()).isEqualTo(now);

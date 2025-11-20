@@ -1,4 +1,4 @@
-package com.hiberus.payment.application.usecase;
+package com.hiberus.payment.application.port.out;
 
 import com.hiberus.payment.application.dto.PaymentOrderRequest;
 import com.hiberus.payment.application.dto.PaymentOrderResponse;

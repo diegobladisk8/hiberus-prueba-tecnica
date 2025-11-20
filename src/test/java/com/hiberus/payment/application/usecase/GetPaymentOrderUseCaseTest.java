@@ -2,21 +2,15 @@ package com.hiberus.payment.application.usecase;
 
 
 import com.hiberus.payment.application.dto.PaymentOrderResponse;
-import com.hiberus.payment.application.dto.PaymentOrderStatusResponse;
 import com.hiberus.payment.application.mapper.PaymentOrderMapper;
-import com.hiberus.payment.domain.model.PaymentOrder;
-import com.hiberus.payment.domain.model.PaymentOrderStatus;
-import com.hiberus.payment.domain.model.PaymentOrderStatusEnum;
+import com.hiberus.payment.infrastructure.model.PaymentOrderEntity;
 import com.hiberus.payment.domain.service.PaymentOrderService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.junit.jupiter.MockitoExtension;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
-import org.junit.jupiter.api.DisplayName;
 import org.mockito.InjectMocks;
 
 import java.time.LocalDateTime;
@@ -45,7 +39,7 @@ class GetPaymentOrderUseCaseTest {
     void testExecute_WhenFound_ReturnsMappedResponse() {
 
         // Domain entity simulada
-        PaymentOrder domain = PaymentOrder.builder()
+        PaymentOrderEntity domain = PaymentOrderEntity.builder()
                 .id("PO-123")
                 .externalReference("EXT-999")
                 .creationDate(LocalDateTime.now())

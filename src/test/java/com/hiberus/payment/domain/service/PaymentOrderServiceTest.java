@@ -1,8 +1,8 @@
 package com.hiberus.payment.domain.service;
 
-import com.hiberus.payment.domain.model.PaymentOrder;
-import com.hiberus.payment.domain.model.PaymentOrderStatus;
-import com.hiberus.payment.domain.model.PaymentOrderStatusEnum;
+import com.hiberus.payment.infrastructure.model.PaymentOrderEntity;
+import com.hiberus.payment.infrastructure.model.PaymentOrderStatusEntity;
+import com.hiberus.payment.infrastructure.model.PaymentOrderStatusEnum;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -23,7 +23,7 @@ class PaymentOrderServiceTest {
 
     @Test
     void createPaymentOrder_shouldReturnCreatedOrder() {
-        PaymentOrder order = PaymentOrder.builder()
+        PaymentOrderEntity order = PaymentOrderEntity.builder()
                 .id("123")
                 .build();
 
@@ -37,7 +37,7 @@ class PaymentOrderServiceTest {
 
     @Test
     void getPaymentOrderById_shouldReturnOrder() {
-        PaymentOrder order = PaymentOrder.builder()
+        PaymentOrderEntity order = PaymentOrderEntity.builder()
                 .id("ABC")
                 .build();
 
@@ -51,7 +51,7 @@ class PaymentOrderServiceTest {
 
     @Test
     void getPaymentOrderStatus_shouldReturnStatus() {
-        PaymentOrderStatus status = new PaymentOrderStatus();
+        PaymentOrderStatusEntity status = new PaymentOrderStatusEntity();
 
         status.setPaymentOrderId("XYZ");
         status.setStatus(PaymentOrderStatusEnum.PENDING);

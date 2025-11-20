@@ -21,7 +21,7 @@ import jakarta.annotation.Generated;
  * PaymentOrderStatus
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-17T18:46:16.062694-05:00[America/Guayaquil]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-20T11:16:05.327354-05:00[America/Guayaquil]")
 public class PaymentOrderStatus {
 
   private String id;
@@ -31,11 +31,11 @@ public class PaymentOrderStatus {
    */
   public enum StatusEnum {
     PENDING("PENDING"),
-
+    
     PROCESSING("PROCESSING"),
-
+    
     COMPLETED("COMPLETED"),
-
+    
     REJECTED("REJECTED");
 
     private String value;
@@ -92,7 +92,7 @@ public class PaymentOrderStatus {
    * Identificador único de la orden de pago
    * @return id
   */
-  @NotNull
+  @NotNull 
   @Schema(name = "id", example = "PO-0001", description = "Identificador único de la orden de pago", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("id")
   public String getId() {
@@ -112,7 +112,7 @@ public class PaymentOrderStatus {
    * Estado de la orden de pago
    * @return status
   */
-  @NotNull
+  @NotNull 
   @Schema(name = "status", example = "PENDING", description = "Estado de la orden de pago", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("status")
   public StatusEnum getStatus() {
@@ -132,7 +132,7 @@ public class PaymentOrderStatus {
    * Fecha de última actualización
    * @return lastUpdateDate
   */
-  @NotNull @Valid
+  @NotNull @Valid 
   @Schema(name = "lastUpdateDate", example = "2023-11-15T10:30Z", description = "Fecha de última actualización", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("lastUpdateDate")
   public OffsetDateTime getLastUpdateDate() {

@@ -1,6 +1,6 @@
 package com.hiberus.payment.domain;
 
-import com.hiberus.payment.domain.model.PaymentOrderStatusEnum;
+import com.hiberus.payment.infrastructure.model.PaymentOrderStatusEnum;
 import com.hiberus.payment.domain.utils.PaymentOrderStatusReadConverter;
 import org.junit.jupiter.api.Test;
 

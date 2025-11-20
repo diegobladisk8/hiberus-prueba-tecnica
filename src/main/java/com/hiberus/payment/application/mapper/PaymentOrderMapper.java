@@ -4,8 +4,10 @@ package com.hiberus.payment.application.mapper;
 import com.hiberus.payment.application.dto.PaymentOrderRequest;
 import com.hiberus.payment.application.dto.PaymentOrderResponse;
 import com.hiberus.payment.application.dto.PaymentOrderStatusResponse;
-import com.hiberus.payment.domain.model.PaymentOrder;
-import com.hiberus.payment.domain.model.PaymentOrderStatus;
+import com.hiberus.payment.infrastructure.model.PaymentOrderEntity;
+import com.hiberus.payment.infrastructure.model.PaymentOrderStatusEntity;
+import com.hiberus.payment.generated.api.model.Account;
+import com.hiberus.payment.generated.api.model.Amount;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -13,8 +15,8 @@ import java.time.LocalDateTime;
 @Component
 public class PaymentOrderMapper {
 
-    public PaymentOrder toDomain(PaymentOrderRequest request) {
-        return PaymentOrder.create(
+    public PaymentOrderEntity toDomain(PaymentOrderRequest request) {
+        return PaymentOrderEntity.create(
                 request.getExternalReference(),
                 request.getDebtorAccount().getIban(),
                 request.getCreditorAccount().getIban(),
@@ -27,21 +29,16 @@ public class PaymentOrderMapper {
         );
     }
 
-    public PaymentOrderResponse toResponse(PaymentOrder paymentOrder) {
+    public PaymentOrderResponse toResponse(PaymentOrderEntity paymentOrder) {
         return PaymentOrderResponse.builder()
                 .id(paymentOrder.getId())
                 .externalReference(paymentOrder.getExternalReference())
                 .status(paymentOrder.getStatus().name())
-                .debtorAccount(PaymentOrderResponse.Account.builder()
-                        .iban(paymentOrder.getDebtorAccount())
-                        .build())
-                .creditorAccount(PaymentOrderResponse.Account.builder()
-                        .iban(paymentOrder.getCreditorAccount())
-                        .build())
-                .instructedAmount(PaymentOrderResponse.Amount.builder()
-                        .amount(paymentOrder.getAmount())
-                        .currency(paymentOrder.getCurrency())
-                        .build())
+                .debtorAccount(new Account(paymentOrder.getDebtorAccount()))
+                .creditorAccount(new Account(paymentOrder.getCreditorAccount()))
+                .instructedAmount( new Amount(
+                        paymentOrder.getAmount().doubleValue(),
+                        paymentOrder.getCurrency()))
                 .remittanceInformation(paymentOrder.getRemittanceInformation())
                 .requestedExecutionDate(paymentOrder.getRequestedExecutionDate())
                 .creationDate(paymentOrder.getCreationDate())
@@ -49,7 +46,7 @@ public class PaymentOrderMapper {
                 .build();
     }
 
-    public PaymentOrderStatusResponse toStatusResponse(PaymentOrderStatus status) {
+    public PaymentOrderStatusResponse toStatusResponse(PaymentOrderStatusEntity status) {
         return PaymentOrderStatusResponse.builder()
                 .id(status.getId())
                 .status(status.getStatus().name())

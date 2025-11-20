@@ -1,4 +1,4 @@
-package com.hiberus.payment.generated.api;
+package com.hiberus.payment.application.port.in;
 
 import com.hiberus.payment.generated.api.model.PaymentOrder;
 import com.hiberus.payment.generated.api.model.PaymentOrderRequest;

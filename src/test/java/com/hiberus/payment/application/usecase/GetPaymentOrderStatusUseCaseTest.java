@@ -3,7 +3,7 @@ package com.hiberus.payment.application.usecase;
 
 import com.hiberus.payment.application.dto.PaymentOrderStatusResponse;
 import com.hiberus.payment.application.mapper.PaymentOrderMapper;
-import com.hiberus.payment.domain.model.PaymentOrderStatus;
+import com.hiberus.payment.infrastructure.model.PaymentOrderStatusEntity;
 import com.hiberus.payment.domain.service.PaymentOrderService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -40,7 +40,7 @@ class GetPaymentOrderStatusUseCaseTest {
     void testExecute_WhenFound_ReturnsMappedStatusResponse() {
 
         // Dominio simulado
-        PaymentOrderStatus domainStatus = PaymentOrderStatus.builder()
+        PaymentOrderStatusEntity domainStatus = PaymentOrderStatusEntity.builder()
                 .id("PO-999")
                 .lastUpdateDate(LocalDateTime.now())
                 .build();

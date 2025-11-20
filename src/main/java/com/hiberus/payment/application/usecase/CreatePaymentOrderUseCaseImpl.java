@@ -3,7 +3,8 @@ package com.hiberus.payment.application.usecase;
 import com.hiberus.payment.application.dto.PaymentOrderRequest;
 import com.hiberus.payment.application.dto.PaymentOrderResponse;
 import com.hiberus.payment.application.mapper.PaymentOrderMapper;
-import com.hiberus.payment.domain.model.PaymentOrder;
+import com.hiberus.payment.application.port.out.CreatePaymentOrderUseCase;
+import com.hiberus.payment.infrastructure.model.PaymentOrderEntity;
 import com.hiberus.payment.domain.service.PaymentOrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -17,7 +18,7 @@ public class CreatePaymentOrderUseCaseImpl implements CreatePaymentOrderUseCase 
     private final PaymentOrderMapper paymentOrderMapper;
 
     public Mono<PaymentOrderResponse> execute(PaymentOrderRequest request) {
-        PaymentOrder paymentOrder = paymentOrderMapper.toDomain(request);
+        PaymentOrderEntity paymentOrder = paymentOrderMapper.toDomain(request);
         return paymentOrderService.createPaymentOrder(paymentOrder)
                 .map(paymentOrderMapper::toResponse);
     }

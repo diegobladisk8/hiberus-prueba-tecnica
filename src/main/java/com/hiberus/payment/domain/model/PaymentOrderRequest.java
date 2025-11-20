@@ -4,11 +4,9 @@ import java.net.URI;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
 import com.hiberus.payment.domain.model.Account;
 import com.hiberus.payment.domain.model.Amount;
 import java.time.LocalDate;
-import java.time.OffsetDateTime;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.openapitools.jackson.nullable.JsonNullable;
 import java.time.OffsetDateTime;
@@ -21,56 +19,13 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * PaymentOrder
+ * PaymentOrderRequest
  */
 
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-11-20T12:44:16.896291-05:00[America/Guayaquil]")
-public class PaymentOrder {
-
-  private String id;
+public class PaymentOrderRequest {
 
   private String externalReference;
-
-  /**
-   * Estado de la orden de pago
-   */
-  public enum StatusEnum {
-    PENDING("PENDING"),
-    
-    PROCESSING("PROCESSING"),
-    
-    COMPLETED("COMPLETED"),
-    
-    REJECTED("REJECTED");
-
-    private String value;
-
-    StatusEnum(String value) {
-      this.value = value;
-    }
-
-    @JsonValue
-    public String getValue() {
-      return value;
-    }
-
-    @Override
-    public String toString() {
-      return String.valueOf(value);
-    }
-
-    @JsonCreator
-    public static StatusEnum fromValue(String value) {
-      for (StatusEnum b : StatusEnum.values()) {
-        if (b.value.equals(value)) {
-          return b;
-        }
-      }
-      throw new IllegalArgumentException("Unexpected value '" + value + "'");
-    }
-  }
-
-  private StatusEnum status;
 
   private Account debtorAccount;
 
@@ -83,49 +38,21 @@ public class PaymentOrder {
   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
   private LocalDate requestedExecutionDate;
 
-  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-  private OffsetDateTime creationDate;
-
-  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-  private OffsetDateTime lastUpdateDate;
-
-  public PaymentOrder() {
+  public PaymentOrderRequest() {
     super();
   }
 
   /**
    * Constructor with only required parameters
    */
-  public PaymentOrder(String id, String externalReference, StatusEnum status, Account debtorAccount, Account creditorAccount, Amount instructedAmount) {
-    this.id = id;
+  public PaymentOrderRequest(String externalReference, Account debtorAccount, Account creditorAccount, Amount instructedAmount) {
     this.externalReference = externalReference;
-    this.status = status;
     this.debtorAccount = debtorAccount;
     this.creditorAccount = creditorAccount;
     this.instructedAmount = instructedAmount;
   }
 
-  public PaymentOrder id(String id) {
-    this.id = id;
-    return this;
-  }
-
-  /**
-   * Identificador único de la orden de pago
-   * @return id
-  */
-  @NotNull 
-  @Schema(name = "id", example = "PO-0001", description = "Identificador único de la orden de pago", requiredMode = Schema.RequiredMode.REQUIRED)
-  @JsonProperty("id")
-  public String getId() {
-    return id;
-  }
-
-  public void setId(String id) {
-    this.id = id;
-  }
-
-  public PaymentOrder externalReference(String externalReference) {
+  public PaymentOrderRequest externalReference(String externalReference) {
     this.externalReference = externalReference;
     return this;
   }
@@ -145,27 +72,7 @@ public class PaymentOrder {
     this.externalReference = externalReference;
   }
 
-  public PaymentOrder status(StatusEnum status) {
-    this.status = status;
-    return this;
-  }
-
-  /**
-   * Estado de la orden de pago
-   * @return status
-  */
-  @NotNull 
-  @Schema(name = "status", example = "PENDING", description = "Estado de la orden de pago", requiredMode = Schema.RequiredMode.REQUIRED)
-  @JsonProperty("status")
-  public StatusEnum getStatus() {
-    return status;
-  }
-
-  public void setStatus(StatusEnum status) {
-    this.status = status;
-  }
-
-  public PaymentOrder debtorAccount(Account debtorAccount) {
+  public PaymentOrderRequest debtorAccount(Account debtorAccount) {
     this.debtorAccount = debtorAccount;
     return this;
   }
@@ -185,7 +92,7 @@ public class PaymentOrder {
     this.debtorAccount = debtorAccount;
   }
 
-  public PaymentOrder creditorAccount(Account creditorAccount) {
+  public PaymentOrderRequest creditorAccount(Account creditorAccount) {
     this.creditorAccount = creditorAccount;
     return this;
   }
@@ -205,7 +112,7 @@ public class PaymentOrder {
     this.creditorAccount = creditorAccount;
   }
 
-  public PaymentOrder instructedAmount(Amount instructedAmount) {
+  public PaymentOrderRequest instructedAmount(Amount instructedAmount) {
     this.instructedAmount = instructedAmount;
     return this;
   }
@@ -225,7 +132,7 @@ public class PaymentOrder {
     this.instructedAmount = instructedAmount;
   }
 
-  public PaymentOrder remittanceInformation(String remittanceInformation) {
+  public PaymentOrderRequest remittanceInformation(String remittanceInformation) {
     this.remittanceInformation = remittanceInformation;
     return this;
   }
@@ -245,7 +152,7 @@ public class PaymentOrder {
     this.remittanceInformation = remittanceInformation;
   }
 
-  public PaymentOrder requestedExecutionDate(LocalDate requestedExecutionDate) {
+  public PaymentOrderRequest requestedExecutionDate(LocalDate requestedExecutionDate) {
     this.requestedExecutionDate = requestedExecutionDate;
     return this;
   }
@@ -265,46 +172,6 @@ public class PaymentOrder {
     this.requestedExecutionDate = requestedExecutionDate;
   }
 
-  public PaymentOrder creationDate(OffsetDateTime creationDate) {
-    this.creationDate = creationDate;
-    return this;
-  }
-
-  /**
-   * Fecha de creación de la orden
-   * @return creationDate
-  */
-  @Valid 
-  @Schema(name = "creationDate", example = "2023-11-15T10:30Z", description = "Fecha de creación de la orden", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("creationDate")
-  public OffsetDateTime getCreationDate() {
-    return creationDate;
-  }
-
-  public void setCreationDate(OffsetDateTime creationDate) {
-    this.creationDate = creationDate;
-  }
-
-  public PaymentOrder lastUpdateDate(OffsetDateTime lastUpdateDate) {
-    this.lastUpdateDate = lastUpdateDate;
-    return this;
-  }
-
-  /**
-   * Fecha de última actualización
-   * @return lastUpdateDate
-  */
-  @Valid 
-  @Schema(name = "lastUpdateDate", example = "2023-11-15T10:30Z", description = "Fecha de última actualización", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("lastUpdateDate")
-  public OffsetDateTime getLastUpdateDate() {
-    return lastUpdateDate;
-  }
-
-  public void setLastUpdateDate(OffsetDateTime lastUpdateDate) {
-    this.lastUpdateDate = lastUpdateDate;
-  }
-
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -313,38 +180,30 @@ public class PaymentOrder {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    PaymentOrder paymentOrder = (PaymentOrder) o;
-    return Objects.equals(this.id, paymentOrder.id) &&
-        Objects.equals(this.externalReference, paymentOrder.externalReference) &&
-        Objects.equals(this.status, paymentOrder.status) &&
-        Objects.equals(this.debtorAccount, paymentOrder.debtorAccount) &&
-        Objects.equals(this.creditorAccount, paymentOrder.creditorAccount) &&
-        Objects.equals(this.instructedAmount, paymentOrder.instructedAmount) &&
-        Objects.equals(this.remittanceInformation, paymentOrder.remittanceInformation) &&
-        Objects.equals(this.requestedExecutionDate, paymentOrder.requestedExecutionDate) &&
-        Objects.equals(this.creationDate, paymentOrder.creationDate) &&
-        Objects.equals(this.lastUpdateDate, paymentOrder.lastUpdateDate);
+    PaymentOrderRequest paymentOrderRequest = (PaymentOrderRequest) o;
+    return Objects.equals(this.externalReference, paymentOrderRequest.externalReference) &&
+        Objects.equals(this.debtorAccount, paymentOrderRequest.debtorAccount) &&
+        Objects.equals(this.creditorAccount, paymentOrderRequest.creditorAccount) &&
+        Objects.equals(this.instructedAmount, paymentOrderRequest.instructedAmount) &&
+        Objects.equals(this.remittanceInformation, paymentOrderRequest.remittanceInformation) &&
+        Objects.equals(this.requestedExecutionDate, paymentOrderRequest.requestedExecutionDate);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, externalReference, status, debtorAccount, creditorAccount, instructedAmount, remittanceInformation, requestedExecutionDate, creationDate, lastUpdateDate);
+    return Objects.hash(externalReference, debtorAccount, creditorAccount, instructedAmount, remittanceInformation, requestedExecutionDate);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class PaymentOrder {\n");
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
+    sb.append("class PaymentOrderRequest {\n");
     sb.append("    externalReference: ").append(toIndentedString(externalReference)).append("\n");
-    sb.append("    status: ").append(toIndentedString(status)).append("\n");
     sb.append("    debtorAccount: ").append(toIndentedString(debtorAccount)).append("\n");
     sb.append("    creditorAccount: ").append(toIndentedString(creditorAccount)).append("\n");
     sb.append("    instructedAmount: ").append(toIndentedString(instructedAmount)).append("\n");
     sb.append("    remittanceInformation: ").append(toIndentedString(remittanceInformation)).append("\n");
     sb.append("    requestedExecutionDate: ").append(toIndentedString(requestedExecutionDate)).append("\n");
-    sb.append("    creationDate: ").append(toIndentedString(creationDate)).append("\n");
-    sb.append("    lastUpdateDate: ").append(toIndentedString(lastUpdateDate)).append("\n");
     sb.append("}");
     return sb.toString();
   }
