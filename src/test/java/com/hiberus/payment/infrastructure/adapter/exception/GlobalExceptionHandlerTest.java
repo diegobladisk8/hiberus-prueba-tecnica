@@ -3,6 +3,7 @@ package com.hiberus.payment.infrastructure.adapter.exception;
 import com.hiberus.payment.infrastructure.exception.GlobalExceptionHandler;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.springframework.core.MethodParameter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.server.RequestPath;
@@ -71,25 +72,21 @@ class GlobalExceptionHandlerTest {
     void testHandleValidationExceptions() {
 
         // --- Arrange ---
-        // Mock del ServerHttpRequest y RequestPath
         ServerHttpRequest request = Mockito.mock(ServerHttpRequest.class);
         RequestPath mockPath = Mockito.mock(RequestPath.class);
+        MethodParameter methodParameter = Mockito.mock(MethodParameter.class);
 
         Mockito.when(request.getPath()).thenReturn(mockPath);
         Mockito.when(mockPath.value()).thenReturn("/api/payment-orders");
 
-        // Crear BindingResult con un error de validación
-        BindingResult bindingResult =
-                new BeanPropertyBindingResult(new Object(), "paymentOrderRequest");
-
+        BindingResult bindingResult = new BeanPropertyBindingResult(new Object(), "paymentOrderRequest");
         bindingResult.addError(new FieldError(
                 "paymentOrderRequest",
                 "externalReference",
                 "must not be blank"
         ));
 
-        WebExchangeBindException ex =
-                new WebExchangeBindException(null, bindingResult);
+        WebExchangeBindException ex = new WebExchangeBindException(methodParameter, bindingResult);
 
         // --- Act ---
         Mono<ResponseEntity<Map<String, Object>>> resultMono =

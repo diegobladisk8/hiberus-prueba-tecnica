@@ -20,6 +20,7 @@ import reactor.core.publisher.Mono;
 
 import java.net.URI;
 import java.time.ZoneOffset;
+import java.util.Objects;
 
 /**
  * Adaptador de controlador reactivo para exponer la API de Órdenes de Pago.
@@ -41,7 +42,7 @@ public class PaymentOrderController implements PaymentOrdersApi {
 
     @Override
     public Mono<ResponseEntity<PaymentOrder>> initiatePaymentOrder(
-            @Valid @RequestBody Mono<PaymentOrderRequest> paymentOrderRequest, // <-- El tipo ahora es reconocido
+            @Valid @RequestBody Mono<PaymentOrderRequest> paymentOrderRequest,
             ServerWebExchange exchange) {
 
         log.info("Received request to initiate a payment order.");
@@ -53,7 +54,9 @@ public class PaymentOrderController implements PaymentOrdersApi {
                 .map(response -> ResponseEntity
                         .created(URI.create("/payment-initiation/payment-orders/" + response.getId()))
                         .body(response))
-                .doOnSuccess(res -> log.info("Successfully created payment order with ID: {}", res.getBody().getId()))
+                // Filter out any ResponseEntity that has a null body
+                .filter(ResponseEntity::hasBody)
+                .doOnSuccess(res -> log.info("Successfully created payment order with ID: {}", Objects.requireNonNull(res.getBody()).getId()))
                 .doOnError(e -> log.error("Error initiating payment order", e));
     }
 
@@ -120,7 +123,7 @@ public class PaymentOrderController implements PaymentOrdersApi {
 
         Amount amount = new Amount();
         // Convertimos BigDecimal a Double para el DTO generado
-        amount.setAmount(response.getInstructedAmount().getAmount().doubleValue());
+        amount.setAmount(response.getInstructedAmount().getAmount());
         amount.setCurrency(response.getInstructedAmount().getCurrency());
         generated.setInstructedAmount(amount);
 

@@ -16,14 +16,14 @@ import static org.junit.jupiter.api.Assertions.*;
 class PaymentOrderEntityTest {
 
     private PaymentOrderEntity paymentOrder;
-    private final String ID = "PO123";
-    private final String EXTERNAL_REFERENCE = "EXT-123";
-    private final String DEBTOR_ACCOUNT = "DEBTOR-IBAN";
-    private final String CREDITOR_ACCOUNT = "CREDITOR-IBAN";
-    private final BigDecimal AMOUNT = new BigDecimal("100.50");
-    private final String CURRENCY = "USD";
-    private final String REMITTANCE_INFO = "Test payment";
-    private final LocalDateTime EXECUTION_DATE = LocalDateTime.now().plusDays(1);
+    private static final String ID = "PO123";
+    private static final String EXTERNAL_REFERENCE = "EXT-123";
+    private static final String DEBTOR_ACCOUNT = "DEBTOR-IBAN";
+    private static final String CREDITOR_ACCOUNT = "CREDITOR-IBAN";
+    private static final BigDecimal AMOUNT = new BigDecimal("100.50");
+    private static final String CURRENCY = "USD";
+    private static final String REMITTANCE_INFO = "Test payment";
+    private static final LocalDateTime EXECUTION_DATE = LocalDateTime.now().plusDays(1);
 
     @BeforeEach
     void setUp() {

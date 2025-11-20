@@ -1,7 +1,46 @@
+<?xml version="1.0"?>
 <FindBugsFilter>
-    <!-- Ignoramos el aviso EI2 en todas las clases dentro del paquete de modelos generados -->
+
+    <!-- Ignorar UwF (Unwritten Field) en tests -->
+    <Match>
+        <Class name="~.*Test" />
+        <Bug pattern="UWF_NULL_FIELD" />
+    </Match>
+
+    <!-- Ignorar DLS (Dead Local Store) en tests -->
+    <Match>
+        <Class name="~.*Test" />
+        <Bug pattern="DLS_DEAD_LOCAL_STORE" />
+    </Match>
+
+    <!-- Ignorar NM (Naming) en tests -->
+    <Match>
+        <Class name="~.*Test" />
+        <Bug pattern="NM_CONFUSING" />
+    </Match>
+
+    <!-- Ignorar NP (Null Pointer) en tests -->
+    <Match>
+        <Class name="~.*Test" />
+        <Bug pattern="NP_NULL_ON_SOME_PATH" />
+    </Match>
+
+    <!-- Ignorar EI2 solo en modelos generados por OpenAPI -->
     <Match>
         <Class name="~com\.hiberus\.payment\.generated\.api\.model\..*" />
-        <Bug pattern="EI2" />
+        <Bug pattern="EI_EXPOSE_REP,EI_EXPOSE_REP2" />
     </Match>
+
+    <!-- Ignorar EI (y EI2 si aparece) en domain.model -->
+    <Match>
+        <Package name="com.hiberus.payment.domain.model" />
+        <Bug pattern="EI_EXPOSE_REP,EI_EXPOSE_REP2" />
+    </Match>
+
+    <Match>
+        <Package name="com.hiberus.payment.generated.api.model" />
+        <Bug pattern="EI_EXPOSE_REP,EI_EXPOSE_REP2" />
+    </Match>
+
+
 </FindBugsFilter>

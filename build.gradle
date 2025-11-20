@@ -40,6 +40,7 @@ dependencies {
 
     // OpenAPI (Swagger UI)
     implementation 'org.springdoc:springdoc-openapi-starter-webflux-ui:2.3.0'
+    implementation 'com.github.spotbugs:spotbugs-annotations:4.8.3'
 
     // Nullable support
     implementation 'org.openapitools:jackson-databind-nullable:0.2.6'
@@ -95,14 +96,24 @@ checkstyle {
     maxWarnings = 0
     maxErrors = 0
 }
-
+//
 //// find build/generated -name "*.java" -type f
 //spotbugs {
 //    toolVersion = '4.8.2' // <-- Una versión compatible y estable con Java 21
 //    effort = "max"
 //    reportLevel = "low"
 //    ignoreFailures = false
+//    excludeFilter = file('spotbugs-exclude.xml')  // Ruta relativa a la raíz
 //}
+//
+//spotbugsMain {
+//    excludeFilter = file("spotbugs-exclude.xml")
+//}
+//
+//spotbugsTest {
+//    excludeFilter = file("spotbugs-exclude.xml")
+//}
+
 // JaCoCo
 jacoco {
     toolVersion = "0.8.11" //
@@ -128,7 +139,7 @@ jacocoTestCoverageVerification {
                     'com.hiberus.payment.domain.model/**'
             ]
             limit {
-                minimum = 0.1
+                minimum = 0.7
             }
         }
     }

@@ -2,8 +2,10 @@ package com.hiberus.payment.generated.api.model;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
 import java.time.OffsetDateTime;
 
 class PaymentOrderStatusTest {
@@ -56,6 +58,90 @@ class PaymentOrderStatusTest {
     @Test
     void testEnumFromValueInvalid() {
         assertThrows(IllegalArgumentException.class, () -> PaymentOrderStatus.StatusEnum.fromValue("INVALID_VALUE"));
+    }
+
+
+    @Test
+    @DisplayName("toString() debería contener los campos principales")
+    void testToStringContainsFields() {
+        PaymentOrderRequest request = new PaymentOrderRequest();
+        request.setExternalReference("EXT-999");
+
+        String result = request.toString();
+
+        assertTrue(result.contains("PaymentOrderRequest"));
+        assertTrue(result.contains("externalReference: EXT-999"));
+    }
+
+    @Test
+    @DisplayName("toIndentedString() debería indentar correctamente las líneas internas (probado vía toString)")
+    void testToIndentedStringIndentation() {
+        PaymentOrderRequest request = new PaymentOrderRequest();
+        request.setExternalReference("EXT-123");
+
+        String result = request.toString();
+
+        // El toIndentedString agrega 4 espacios a las líneas internas
+        assertTrue(result.contains("    externalReference: EXT-123"));
+    }
+
+    @Test
+    @DisplayName("equals() debería retornar false para objetos diferentes")
+    void testEqualsFalse() {
+        PaymentOrderRequest r1 = new PaymentOrderRequest();
+        r1.setExternalReference("A");
+
+        PaymentOrderRequest r2 = new PaymentOrderRequest();
+        r2.setExternalReference("B");
+
+        assertNotEquals(r1, r2);
+    }
+
+    @Test
+    @DisplayName("equals() debería retornar true para objetos iguales")
+    void testEqualsTrue() {
+        Account debtor = new Account();
+        Account creditor = new Account();
+        Amount amount = new Amount();
+        LocalDate date = LocalDate.of(2025, 10, 30);
+
+        PaymentOrderRequest r1 = new PaymentOrderRequest("EXT-1", debtor, creditor, amount);
+        r1.setRemittanceInformation("ABC");
+        r1.setRequestedExecutionDate(date);
+
+        PaymentOrderRequest r2 = new PaymentOrderRequest("EXT-1", debtor, creditor, amount);
+        r2.setRemittanceInformation("ABC");
+        r2.setRequestedExecutionDate(date);
+
+        assertEquals(r1, r2);
+        assertEquals(r1.hashCode(), r2.hashCode());
+    }
+
+    @Test
+    @DisplayName("hashCode() debería ser consistente con equals()")
+    void testHashCode() {
+        Account debtor = new Account();
+        Account creditor = new Account();
+        Amount amount = new Amount();
+        LocalDate date = LocalDate.of(2026, 5, 15);
+
+        PaymentOrderRequest p1 = new PaymentOrderRequest("EXT-55", debtor, creditor, amount);
+        p1.setRemittanceInformation("ABC");
+        p1.setRequestedExecutionDate(date);
+
+        PaymentOrderRequest p2 = new PaymentOrderRequest("EXT-55", debtor, creditor, amount);
+        p2.setRemittanceInformation("ABC");
+        p2.setRequestedExecutionDate(date);
+
+        PaymentOrderRequest p3 = new PaymentOrderRequest("OTHER", debtor, creditor, amount);
+
+        // Mismos valores → equals true → mismo hashCode
+        assertEquals(p1, p2);
+        assertEquals(p1.hashCode(), p2.hashCode());
+
+        // Valores distintos → equals false → hashCode generalmente distinto
+        assertNotEquals(p1, p3);
+        assertNotEquals(p1.hashCode(), p3.hashCode());
     }
 }
 

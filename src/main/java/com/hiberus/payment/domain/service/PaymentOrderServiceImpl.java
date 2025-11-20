@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDateTime;
+import java.util.Locale;
 import java.util.UUID;
 
 @Service
@@ -51,6 +52,8 @@ public class PaymentOrderServiceImpl implements PaymentOrderService {
 
 
     private String generatePaymentOrderId() {
-        return "PO-" + UUID.randomUUID().toString().substring(0, 8).toUpperCase();
-    }
+        return "PO-" + UUID.randomUUID()
+                .toString()
+                .substring(0, 8)
+                .toUpperCase(Locale.ROOT);    }
 }

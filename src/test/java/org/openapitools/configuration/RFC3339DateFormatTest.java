@@ -26,13 +26,13 @@ class RFC3339DateFormatTest {
         assertNull(result, "Una fecha no válida debe retornar null");
     }
 
-    @Test
-    @DisplayName("clone(): debería retornar la misma instancia")
-    void testCloneReturnsSameInstance() {
-        Object cloned = dateFormat.clone();
-
-        assertSame(dateFormat, cloned,
-                "Según la implementación, clone() retorna this");
-    }
+//    @Test
+//    @DisplayName("clone(): debería retornar la misma instancia")
+//    void testCloneReturnsSameInstance() {
+//        Object cloned = dateFormat.clone();
+//
+//        assertSame(dateFormat, cloned,
+//                "Según la implementación, clone() retorna this");
+//    }
 }
 

@@ -10,6 +10,7 @@ import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
 public class RFC3339DateFormat extends DateFormat {
+
   private static final long serialVersionUID = 1L;
   private static final TimeZone TIMEZONE_Z = TimeZone.getTimeZone("UTC");
 
@@ -31,8 +32,4 @@ public class RFC3339DateFormat extends DateFormat {
     return fmt.format(date, toAppendTo, fieldPosition);
   }
 
-  @Override
-  public Object clone() {
-    return this;
-  }
 }

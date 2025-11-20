@@ -16,10 +16,10 @@ import org.mockito.Mockito;
 
  class PaymentOrderTest {
 
-     private final String ID = "STATUS-123";
-     private final String PAYMENT_ORDER_ID = "PO-123";
-     private final PaymentOrderStatusEnum STATUS = PaymentOrderStatusEnum.PENDING;
-     private final LocalDateTime LAST_UPDATE_DATE = LocalDateTime.now();
+     private static final String ID = "STATUS-123";
+     private static final String PAYMENT_ORDER_ID = "PO-123";
+     private static final PaymentOrderStatusEnum STATUS = PaymentOrderStatusEnum.PENDING;
+     private static final LocalDateTime LAST_UPDATE_DATE = LocalDateTime.now();
 
     @Test
     @DisplayName("Debería crear PaymentOrder con constructor obligatorio")
