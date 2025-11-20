@@ -1,4 +1,4 @@
-package com.hiberus.payment.domain;
+package com.hiberus.payment.domain.utils;
 
 import com.hiberus.payment.domain.model.PaymentOrderStatusEnum;
 import org.springframework.core.convert.converter.Converter;
